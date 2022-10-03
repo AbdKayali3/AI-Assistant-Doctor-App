@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maching_learning/fading_loading_indicator.dart';
+import 'fading_loading_indicator.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({

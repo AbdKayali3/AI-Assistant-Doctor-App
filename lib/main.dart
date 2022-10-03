@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maching_learning/pick_image.dart';
+import 'pick_image.dart';
 
 void main() {
   runApp(const MyApp());

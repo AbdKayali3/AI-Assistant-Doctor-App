@@ -3,7 +3,7 @@ import 'dart:io' as Io;
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:maching_learning/primary_button.dart';
+import 'primary_button.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 // import 'package:flutter_beautiful_popup/main.dart';
@@ -13,13 +13,12 @@ class ResultData {
   String? accuracy_smaller;
   String? accuracy_bigger;
 
-  ResultData({this.result, this.accuracy_smaller,this.accuracy_bigger});
+  ResultData({this.result, this.accuracy_smaller, this.accuracy_bigger});
 
   ResultData.fromJson(Map<String, dynamic> json) {
     result = json['Result'];
     accuracy_smaller = json['Accuracy_Smaller'];
     accuracy_bigger = json['Accuracy_Bigger'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -43,7 +42,7 @@ class _PickImageState extends State<PickImagePage> {
     var response;
     // Added clear api path and to change link on the fly
     // Change this link to your host server where Ai is being hosted
-    String link = "Link to your host"; 
+    String link = "Link to your host";
     String api = "/api/uploader";
     String url = link + api;
     try {
@@ -57,10 +56,13 @@ class _PickImageState extends State<PickImagePage> {
       Map<String, dynamic> valueMap = json.decode(ssresponse.toString());
 
       ResultData output = ResultData.fromJson(valueMap);
-      var acc_s = double.parse(output.accuracy_smaller.toString()).toStringAsFixed(3);
-      var acc_b = double.parse(output.accuracy_bigger.toString()).toStringAsFixed(3);
+      var acc_s =
+          double.parse(output.accuracy_smaller.toString()).toStringAsFixed(3);
+      var acc_b =
+          double.parse(output.accuracy_bigger.toString()).toStringAsFixed(3);
       print("Result: ${output.result} \nAccuracy: ${output.accuracy_smaller}");
-      response = "Status: ${output.result} \n Accuracy_Smaller: ${acc_s}\n Accuracy_Bigger: ${acc_b}";
+      response =
+          "Status: ${output.result} \n Accuracy_Smaller: ${acc_s}\n Accuracy_Bigger: ${acc_b}";
     } catch (e) {
       response = "Error connecting to the server";
       print(e);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maching_learning/tweens.dart';
+import 'tweens.dart';
 
 class FadingLoadingIndicator extends StatefulWidget {
   const FadingLoadingIndicator({
