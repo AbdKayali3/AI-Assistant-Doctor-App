@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';  // Not used import?
 import 'dart:io' as Io;
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -10,19 +10,23 @@ import 'dart:convert';
 
 class ResultData {
   String? result;
-  String? accuracy;
+  String? accuracy_smaller;
+  String? accuracy_bigger;
 
-  ResultData({this.result, this.accuracy});
+  ResultData({this.result, this.accuracy_smaller,this.accuracy_bigger});
 
   ResultData.fromJson(Map<String, dynamic> json) {
     result = json['Result'];
-    accuracy = json['Accuracy'];
+    accuracy_smaller = json['Accuracy_Smaller'];
+    accuracy_bigger = json['Accuracy_Bigger'];
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['result'] = this.result;
-    data['accuracy'] = this.accuracy;
+    data['accuracy_smaller'] = this.accuracy_smaller;
+    data['accuracy_bigger'] = this.accuracy_bigger;
     return data;
   }
 }
@@ -37,11 +41,14 @@ class PickImagePage extends StatefulWidget {
 class _PickImageState extends State<PickImagePage> {
   Future<Future<String?>> getHttp(String b64Image) async {
     var response;
+    // Added clear api path and to change link on the fly
+    // Change this link to your host server where Ai is being hosted
+    String link = "Link to your host"; 
+    String api = "/api/uploader";
+    String url = link + api;
     try {
       var formData = FormData.fromMap({'img': b64Image});
-      var ssresponse = await Dio().post(
-          'https://db5e-2401-4900-1d77-b9ed-585b-147c-1844-740b.ngrok.io/api/uploader',
-          data: formData);
+      var ssresponse = await Dio().post(url, data: formData);
 
       // Map<String, dynamic> result = jsonDecode(ssresponse);
       print(ssresponse);
@@ -50,9 +57,10 @@ class _PickImageState extends State<PickImagePage> {
       Map<String, dynamic> valueMap = json.decode(ssresponse.toString());
 
       ResultData output = ResultData.fromJson(valueMap);
-      var acc = double.parse(output.accuracy.toString()).toStringAsFixed(3);
-      print("Result: ${output.result} \nAccuracy: ${output.accuracy}");
-      response = "Status: ${output.result} \nAccuracy: ${acc}";
+      var acc_s = double.parse(output.accuracy_smaller.toString()).toStringAsFixed(3);
+      var acc_b = double.parse(output.accuracy_bigger.toString()).toStringAsFixed(3);
+      print("Result: ${output.result} \nAccuracy: ${output.accuracy_smaller}");
+      response = "Status: ${output.result} \n Accuracy_Smaller: ${acc_s}\n Accuracy_Bigger: ${acc_b}";
     } catch (e) {
       response = "Error connecting to the server";
       print(e);
@@ -91,7 +99,7 @@ class _PickImageState extends State<PickImagePage> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Result'),
-        content: Text("ssss"),
+        content: const Text("ERROR no photo uploaded!"),
         actions: <Widget>[
           // TextButton(
           //   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -122,7 +130,7 @@ class _PickImageState extends State<PickImagePage> {
           title: const Text(
             "AI Assistant Doctor",
             style: TextStyle(
-              color: Colors.purple,
+              color: Colors.blue,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),

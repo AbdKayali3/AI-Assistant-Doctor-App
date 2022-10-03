@@ -85,9 +85,9 @@ class PrimaryButton extends StatelessWidget {
         overlayColor: MaterialStateProperty.all(Colors.white30),
         backgroundColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.disabled)) {
-            return (backgroundColor ?? Colors.purple).withOpacity(0.2);
+            return (backgroundColor ?? Colors.blue).withOpacity(0.2);
           } else {
-            return (backgroundColor ?? Colors.purple);
+            return (backgroundColor ?? Colors.blue);
           }
         }),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
