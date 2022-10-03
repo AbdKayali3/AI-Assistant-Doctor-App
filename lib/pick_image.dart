@@ -181,7 +181,7 @@ class _PickImageState extends State<PickImagePage> {
                     padding: EdgeInsets.only(top: 0),
                     child: Center(
                       child: Text(
-                        "Disclaimer: The authors are not responsible if this AI is deployed in clinical settings as it is not FIELD TESTED",
+                        "The authors are not responsible if this AI is deployed in clinical settings as it is not FIELD TESTED",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
